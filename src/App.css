@@ -1,0 +1,28 @@
+.container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.bins {
+	display: flex;
+	flex: 1;
+	flex-direction: row;
+	align-items: flex-end;
+}
+
+.bin {
+	width: 5px;
+	margin: 0 3px;
+	background-color: teal;
+	height: 100px;
+}
+
+.panel {
+	display: flex;
+	flex: 1;
+	justify-content: center;
+	align-items: center;
+	padding: 10px 0;
+}
