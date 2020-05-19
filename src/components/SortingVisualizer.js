@@ -1,8 +1,8 @@
 import React from 'react';
-import { mergeSort } from '../algorithms/mergeSort';
+import { mergeSort, bubbleSort } from '../algorithms';
 
 // Change this value for the speed of the animations.
-const ANIMATION_SPEED_MS = 10;
+const ANIMATION_SPEED_MS = 3;
 
 // This is the main color of the array bars.
 const PRIMARY_COLOR = 'teal';
@@ -30,12 +30,22 @@ class SortingVisualizer extends React.Component {
 		for (let i = 0; i < 100; i++) {
 			arr.push(this.getRandomInt(10, 300));
 		}
-
+		// console.log(bubbleSort(arr));
 		this.setState({ array: arr });
 	};
 
 	initMergeSort = () => {
 		mergeSort(
+			this.state.array,
+			document.getElementsByClassName('bin'),
+			PRIMARY_COLOR,
+			SECONDARY_COLOR,
+			ANIMATION_SPEED_MS
+		);
+	};
+
+	initBubbleSort = () => {
+		bubbleSort(
 			this.state.array,
 			document.getElementsByClassName('bin'),
 			PRIMARY_COLOR,
@@ -62,6 +72,7 @@ class SortingVisualizer extends React.Component {
 						Generate New Array
 					</button>
 					<button onClick={this.initMergeSort}>Merge Sort</button>
+					<button onClick={this.initBubbleSort}>Bubble Sort</button>
 				</div>
 			</div>
 		);
