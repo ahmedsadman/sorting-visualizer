@@ -34,24 +34,30 @@ class SortingVisualizer extends React.Component {
 		this.setState({ array: arr });
 	};
 
-	initMergeSort = () => {
-		mergeSort(
+	initMergeSort = async () => {
+		const [timers, sortedArr] = mergeSort(
 			this.state.array,
 			document.getElementsByClassName('bin'),
 			PRIMARY_COLOR,
 			SECONDARY_COLOR,
 			ANIMATION_SPEED_MS
 		);
+
+		await Promise.all(timers);
+		this.setState({ array: sortedArr });
 	};
 
-	initBubbleSort = () => {
-		bubbleSort(
+	initBubbleSort = async () => {
+		const [timers, sortedArr] = bubbleSort(
 			this.state.array,
 			document.getElementsByClassName('bin'),
 			PRIMARY_COLOR,
 			SECONDARY_COLOR,
 			ANIMATION_SPEED_MS
 		);
+
+		await Promise.all(timers);
+		this.setState({ array: sortedArr });
 	};
 
 	render() {

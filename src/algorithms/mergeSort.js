@@ -5,7 +5,7 @@ function getMergeSortAnimations(array) {
 	if (array.length <= 1) return array;
 	const auxiliaryArray = array.slice(); // create a deep copy
 	mergeSortHelper(array, 0, array.length - 1, auxiliaryArray, animations);
-	return animations;
+	return [animations, array];
 }
 
 export function mergeSort(
@@ -15,7 +15,10 @@ export function mergeSort(
 	SECONDARY_COLOR,
 	ANIMATION_SPEED_MS
 ) {
-	const animations = getMergeSortAnimations(array);
+	const [animations, auxArray] = getMergeSortAnimations(array);
+	const timerList = [];
+	let timer = null;
+
 	for (let i = 0; i < animations.length; i++) {
 		const arrayBars = bins;
 		const isColorChange = i % 3 !== 2;
@@ -24,18 +27,28 @@ export function mergeSort(
 			const barOneStyle = arrayBars[barOneIdx].style;
 			const barTwoStyle = arrayBars[barTwoIdx].style;
 			const color = i % 3 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
-			setTimeout(() => {
-				barOneStyle.backgroundColor = color;
-				barTwoStyle.backgroundColor = color;
-			}, i * ANIMATION_SPEED_MS);
+			timer = new Promise((resolve, reject) =>
+				setTimeout(() => {
+					barOneStyle.backgroundColor = color;
+					barTwoStyle.backgroundColor = color;
+					resolve();
+				}, i * ANIMATION_SPEED_MS)
+			);
 		} else {
-			setTimeout(() => {
-				const [barOneIdx, newHeight] = animations[i];
-				const barOneStyle = arrayBars[barOneIdx].style;
-				barOneStyle.height = `${newHeight}px`;
-			}, i * ANIMATION_SPEED_MS);
+			timer = new Promise((resolve, reject) => {
+				setTimeout(() => {
+					const [barOneIdx, newHeight] = animations[i];
+					const barOneStyle = arrayBars[barOneIdx].style;
+					barOneStyle.height = `${newHeight}px`;
+					resolve();
+				}, i * ANIMATION_SPEED_MS);
+			});
 		}
+
+		timerList.push(timer);
 	}
+
+	return [timerList, auxArray];
 }
 
 function mergeSortHelper(
