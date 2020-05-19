@@ -10,13 +10,15 @@
 	flex: 1;
 	flex-direction: row;
 	align-items: flex-end;
+	height: 310px;
 }
 
 .bin {
 	width: 5px;
 	margin: 0 3px;
 	background-color: teal;
-	height: 100px;
+	height: auto;
+	transition: height 0.1s;
 }
 
 .panel {
@@ -25,4 +27,8 @@
 	justify-content: center;
 	align-items: center;
 	padding: 10px 0;
+}
+
+.panel button {
+	margin: 2px 3px;
 }
